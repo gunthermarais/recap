@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Follow-Up Report - Email Follow-Up System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Your Follow-Up Report</h1>
+            <nav>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+        </header>
+        <main>
+            <div class="report">
+                <h2>Email Follow-Up Analysis</h2>
+                
+                {% if errors %}
+                <div class="errors-section">
+                    <h3>Errors</h3>
+                    <ul class="error-list">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if gmail_report %}
+                <section class="report-section gmail-section">
+                    <h3>Gmail Follow-ups</h3>
+                    
+                    <h4>Emails Explicitly Requiring Response</h4>
+                    {% if gmail_report.explicit_follow_ups %}
+                        <div class="email-list">
+                            {% for email in gmail_report.explicit_follow_ups %}
+                                <div class="email-card">
+                                    <h4>{{ email.subject }}</h4>
+                                    <p class="recipient">To: {{ email.to }}</p>
+                                    <p class="date">Sent: {{ email.date }}</p>
+                                    <p class="waiting">Waiting for: {{ email.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No explicit follow-ups needed at this time.</p>
+                    {% endif %}
+                    
+                    <h4>All Unanswered Sent Emails</h4>
+                    {% if gmail_report.unanswered_emails %}
+                        <div class="email-list">
+                            {% for email in gmail_report.unanswered_emails %}
+                                <div class="email-card">
+                                    <h4>{{ email.subject }}</h4>
+                                    <p class="recipient">To: {{ email.to }}</p>
+                                    <p class="date">Sent: {{ email.date }}</p>
+                                    <p class="waiting">Waiting for: {{ email.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No unanswered emails found.</p>
+                    {% endif %}
+                    
+                    <h4>All Unreplied Received Emails</h4>
+                    {% if gmail_report.unreplied_received %}
+                        <div class="email-list">
+                            {% for email in gmail_report.unreplied_received %}
+                                <div class="email-card received-email">
+                                    <h4>{{ email.subject }}</h4>
+                                    <p class="sender">From: {{ email.from }}</p>
+                                    <p class="date">Received: {{ email.date }}</p>
+                                    <p class="waiting">Unreplied for: {{ email.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No unreplied received emails found.</p>
+                    {% endif %}
+                </section>
+                {% endif %}
+                
+                {% if outlook_report %}
+                <section class="report-section outlook-section">
+                    <h3>Outlook Follow-ups</h3>
+                    
+                    <h4>All Unanswered Sent Emails</h4>
+                    {% if outlook_report.unanswered_emails %}
+                        <div class="email-list">
+                            {% for email in outlook_report.unanswered_emails %}
+                                <div class="email-card">
+                                    <h4>{{ email.subject }}</h4>
+                                    <p class="recipient">To: {{ email.to }}</p>
+                                    <p class="date">Sent: {{ email.date }}</p>
+                                    <p class="waiting">Waiting for: {{ email.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No unanswered emails found.</p>
+                    {% endif %}
+                    
+                    <h4>All Unreplied Received Emails</h4>
+                    {% if outlook_report.unreplied_received %}
+                        <div class="email-list">
+                            {% for email in outlook_report.unreplied_received %}
+                                <div class="email-card received-email">
+                                    <h4>{{ email.subject }}</h4>
+                                    <p class="sender">From: {{ email.from }}</p>
+                                    <p class="date">Received: {{ email.date }}</p>
+                                    <p class="waiting">Unreplied for: {{ email.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No unreplied received emails found.</p>
+                    {% endif %}
+                </section>
+                {% endif %}
+                
+                {% if whatsapp_report %}
+                <section class="report-section whatsapp-section">
+                    <h3>WhatsApp Follow-ups</h3>
+                    
+                    <h4>Unanswered WhatsApp Chats</h4>
+                    {% if whatsapp_report.unanswered_chats %}
+                        <div class="chat-list">
+                            {% for chat in whatsapp_report.unanswered_chats %}
+                                <div class="chat-card">
+                                    <h4>{{ chat.contact }}</h4>
+                                    <p class="phone">Phone: {{ chat.phone }}</p>
+                                    <p class="message">Last message: "{{ chat.last_message }}"</p>
+                                    <p class="date">Received: {{ chat.timestamp }}</p>
+                                    <p class="waiting">Unreplied for: {{ chat.days_waiting }} days</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-results">No unanswered WhatsApp chats found.</p>
+                    {% endif %}
+                </section>
+                {% endif %}
+                
+                {% if not gmail_report and not outlook_report %}
+                <div class="no-data-message">
+                    <p>No email data available. Please make sure at least one email account is connected.</p>
+                    <a href="{{ url_for('dashboard') }}" class="btn primary-btn">Back to Dashboard</a>
+                </div>
+                {% endif %}
+                
+                <div class="actions">
+                    <a href="{{ url_for('generate_report') }}" class="btn primary-btn">Refresh Report</a>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 Email Follow-Up System</p>
+        </footer>
+    </div>
+</body>
+</html> 

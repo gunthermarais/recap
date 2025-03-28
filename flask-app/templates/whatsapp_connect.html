@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect WhatsApp - Email Follow-Up System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Connect WhatsApp</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Back to Home</a>
+            </nav>
+        </header>
+        <main>
+            <div class="whatsapp-connect">
+                <h2>Connect Your WhatsApp</h2>
+                <div id="qr-container">
+                    <p>Loading QR code...</p>
+                </div>
+                <div id="status-message"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        function loadQRCode() {
+            fetch('/get-whatsapp-qr')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.qrCode) {
+                        document.getElementById('qr-container').innerHTML = 
+                            `<img src="${data.qrCode}" alt="WhatsApp QR Code">`;
+                    }
+                });
+        }
+
+        function checkStatus() {
+            fetch('/check-whatsapp-status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.connected) {
+                        document.getElementById('status-message').innerHTML = 
+                            '<p class="success">WhatsApp connected successfully!</p>';
+                        setTimeout(() => {
+                            window.location.href = '{{ url_for("dashboard") }}';
+                        }, 2000);
+                    } else {
+                        setTimeout(checkStatus, 2000);
+                    }
+                });
+        }
+        
+        loadQRCode();
+        checkStatus();
+    </script>
+</body>
+</html> 

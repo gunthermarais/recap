@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Flask-related
+instance/
+*.db
+*.sqlite
+
+# VSCode or other IDE settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Pytest cache
+.pytest_cache/
+.env 
+node_modules/
+*secret*
+*client_secret*
+*credentials*
+*github_personal*

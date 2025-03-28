@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Follow-Up System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Email Follow-Up System</h1>
+        </header>
+        <main>
+            {% if error_message %}
+            <div class="error-alert">
+                {{ error_message }}
+            </div>
+            {% endif %}
+            <div class="hero">
+                <h2>Never miss an important follow-up again!</h2>
+                <p>Our system analyzes your sent emails and helps you track which ones need follow-up attention.</p>
+                <div class="auth-buttons">
+                    <a href="{{ url_for('authorize') }}" class="btn gmail-btn">
+                        Connect with Gmail
+                    </a>
+                    <a href="{{ url_for('authorize_outlook') }}" class="btn outlook-btn">
+                        Connect with Outlook
+                    </a>
+                    <a href="{{ url_for('authorize_outlook_simple') }}" class="btn outlook-btn">
+                        Connect with Outlook (Simple)
+                    </a>
+                    <a href="{{ url_for('authorize_whatsapp') }}" class="btn whatsapp-btn">
+                        Connect WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <h3>Identify Unanswered Emails</h3>
+                    <p>Find all emails you've sent that haven't received a response yet.</p>
+                </div>
+                <div class="feature">
+                    <h3>Smart Detection</h3>
+                    <p>Automatically identify emails that require follow-up based on context and keywords.</p>
+                </div>
+                <div class="feature">
+                    <h3>Secure & Private</h3>
+                    <p>Your email data is never stored - everything happens in your current session.</p>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 Email Follow-Up System</p>
+        </footer>
+    </div>
+</body>
+</html> 

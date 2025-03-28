@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Email Follow-Up System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .error-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fee2e2;
+            border: 1px solid #ef4444;
+            border-radius: 0.5rem;
+        }
+        .error-heading {
+            color: #991b1b;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            color: #7f1d1d;
+            margin-bottom: 1rem;
+        }
+        .error-traceback {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.25rem;
+        }
+        .back-link:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-heading">Authentication Error</h1>
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% if traceback %}
+        <div class="error-traceback">
+            {{ traceback }}
+        </div>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Email Follow-Up System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Email Follow-Up Dashboard</h1>
+            <nav>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+        </header>
+        <main>
+            <div class="dashboard">
+                <h2>Welcome to your Follow-Up Dashboard</h2>
+                
+                <div class="connection-status">
+                    {% if has_gmail %}
+                    <div class="connection gmail-connection">
+                        <h3>Gmail Connected ✓</h3>
+                        <p>Your Gmail account is successfully connected.</p>
+                    </div>
+                    {% else %}
+                    <div class="connection gmail-connection not-connected">
+                        <h3>Gmail Not Connected</h3>
+                        <p>Connect your Gmail account to track follow-ups.</p>
+                        <a href="{{ url_for('authorize') }}" class="btn gmail-btn">Connect Gmail</a>
+                    </div>
+                    {% endif %}
+                    
+                    {% if has_outlook %}
+                    <div class="connection outlook-connection">
+                        <h3>Outlook Connected ✓</h3>
+                        <p>Your Outlook account is successfully connected.</p>
+                    </div>
+                    {% else %}
+                    <div class="connection outlook-connection not-connected">
+                        <h3>Outlook Not Connected</h3>
+                        <p>Connect your Outlook account to track follow-ups.</p>
+                        <a href="{{ url_for('authorize_outlook_simple') }}" class="btn outlook-btn">Connect Outlook</a>
+                    </div>
+                    {% endif %}
+                    
+                    {% if has_whatsapp %}
+                    <div class="connection whatsapp-connection">
+                        <h3>WhatsApp Connected ✓</h3>
+                        <p>Your WhatsApp account is successfully connected.</p>
+                    </div>
+                    {% else %}
+                    <div class="connection whatsapp-connection not-connected">
+                        <h3>WhatsApp Not Connected</h3>
+                        <p>Connect your WhatsApp account to track follow-ups.</p>
+                        <a href="{{ url_for('authorize_whatsapp') }}" class="btn whatsapp-btn">Connect WhatsApp</a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="actions">
+                    <a href="{{ url_for('generate_report') }}" class="btn primary-btn">Generate Follow-Up Report</a>
+                </div>
+                
+                <div class="info-box">
+                    <h3>What happens next?</h3>
+                    <p>When you generate a report, we'll analyze your sent emails from the last 30 days and identify:</p>
+                    <ul>
+                        <li>Emails explicitly requiring follow-up (containing keywords like "question", "request", etc.)</li>
+                        <li>Any emails you've sent that haven't received a response</li>
+                    </ul>
+                    <p>This process may take a few moments depending on the volume of emails.</p>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 Email Follow-Up System</p>
+        </footer>
+    </div>
+</body>
+</html> 
