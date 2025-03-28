@@ -1,14 +1,8 @@
 {
-  "name": "email-bot",
+  "name": "whatsapp-service",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "description": "WhatsApp integration service",
+  "main": "server.js",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
